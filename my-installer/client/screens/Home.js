@@ -1,36 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ActivityIndicator, TouchableOpacity } from 'react-native';
 import SearchBar from '../components/searchBar';
 import SearchResult from '../components/searchResult';
+import { Ionicons } from '@expo/vector-icons';
 
-const stores = [
-  {
-    name: "Carmelita's Store",
-    address: "123 ABC Street",
-    updated: "3/13/2024"
-  },
-  {
-    name: "Juan's Store",
-    address: "4924 Upper Street",
-    updated: "3/14/2024"
-  },
-  {
-    name: "John's Store",
-    address: "246 Down Street",
-    updated: "3/15/2024"
-  },
-  {
-    name: "John's Store",
-    address: "246 Down Street",
-    updated: "3/15/2024"
-  }
-]
+import {stores} from '../components/storeList';
 
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
   
   useEffect(() => {
     /*
@@ -46,27 +26,39 @@ const Home = () => {
     */
     setData(stores);
   }, []);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity style = {styles.addButton} onPress = {() =>{ navigation.navigate('NewStoreForm')}}>
+              <Ionicons name='add' color='black' style = {styles.addIcon}/>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
   
 
   return (
-      <SafeAreaView style = {styles.container}>
-      <SearchBar
-        searchPhrase={searchPhrase}
-        setSearchPhrase={setSearchPhrase}
-        clicked={clicked}
-        setClicked={setClicked}
-      />
+    <SafeAreaView style = {styles.container}>
+      <View style = {styles.search}>
+        <SearchBar
+          searchPhrase={searchPhrase}
+          setSearchPhrase={setSearchPhrase}
+          clicked={clicked}
+          setClicked={setClicked}
+        />
+        <TouchableOpacity style = {styles.qrButton} onPress = {() =>{ navigation.navigate('CameraScreen')}}>
+          <Ionicons name='qr-code-outline' color='black' style = {styles.qrIcon}/>
+        </TouchableOpacity>
+      </View>
       <View style = {styles.searchResult}>
-      { !data? (<ActivityIndicator size="large" />) : (
-
+        { !data? (<ActivityIndicator size="large" />) : (
           <SearchResult
-
             searchPhrase={searchPhrase}
             data={data}
             setClicked={setClicked}
           />
-
-      )}
+        )}
       </View>
     </SafeAreaView>
   );
@@ -79,10 +71,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  root: {
-    flex: 1,
+  addButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    marginRight: 5,
     justifyContent: "center",
     alignItems: "center",
+  },
+  addIcon: {
+    fontSize: 20
+  },
+  search: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: 'row',
+    width: '100%',
+  },
+  qrButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    marginRight: 15,
+    shadowColor: "black",
+    shadowOffset: 0,
+    shadowOpacity: 0.4,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  qrIcon: {
+    fontSize: 30
   },
   searchResult: {
     flex: 1,

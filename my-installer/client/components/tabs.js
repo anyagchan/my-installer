@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
-import HomeScreen from '../screens/Home.js';
+import HomeScreen from '../screens/HomeNav.js';
 import HistoryScreen from '../screens/History.js';
 import ProfileScreen from '../screens/Profile.js';
 
@@ -26,7 +26,8 @@ const Tabs = () => {
             }
           }}
           >
-        <Tab.Screen name="Home" component={HomeScreen} options={{
+        <Tab.Screen name="HomeNav" component={HomeScreen} options={{
+          headerShown: false,
           tabBarIcon: ({focused}) => (
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
               <Ionicons name='home' color={focused? 'red' : 'black'}/>

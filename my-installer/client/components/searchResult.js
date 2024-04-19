@@ -22,15 +22,15 @@ const List = ({ searchPhrase, setClicked, data }) => {
   const renderItem = ({ item }) => {
     // when no input, show all
     if (searchPhrase === "") {
-      return <Item name={item.name} address={item.address} updated={item.updated} />;
+      return <Item key={item.id} name={item.name} address={item.address} updated={item.updated} />;
     }
     // filter of the name
     if (item.name.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
-      return <Item name={item.name} address={item.address} updated={item.updated}/>;
+      return <Item key={item.id} name={item.name} address={item.address} updated={item.updated}/>;
     }
     // filter of the description
     if (item.address.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
-      return <Item name={item.name} address={item.address} updated={item.updated}/>;
+      return <Item key={item.id} name={item.name} address={item.address} updated={item.updated}/>;
     }
   };
 
