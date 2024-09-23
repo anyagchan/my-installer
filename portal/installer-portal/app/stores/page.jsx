@@ -1,0 +1,60 @@
+import React from "react";
+import Image from "next/image";
+
+import Header from "../components/Header.jsx";
+import Sidebar from "../components/Sidebar.jsx";
+import StoreTable from "./StoreTableServer.jsx";
+import { Dropdown } from "antd";
+import Search from "../components/Search.jsx";
+
+const page = () => {
+  return (
+    <main style={styles.main}>
+      <div style={styles.header}>
+        <Header />
+      </div>
+      <div style={styles.body}>
+        <div style={styles.sidebar}>
+          <Sidebar />
+        </div>
+        <div style={styles.content}>
+          <div style={styles.title}>Stores</div>
+          <Search placeholder="Search invoices..." />
+          <StoreTable />
+        </div>
+      </div>
+    </main>
+  );
+};
+
+export default page;
+
+const styles = {
+  main: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    minHeight: "100vh",
+    backgroundColor: "white",
+  },
+  header: {
+    display: "flex",
+  },
+  body: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "row",
+  },
+  sidebar: {
+    width: "180px",
+  },
+  title: {
+    fontSize: "26px",
+    marginBottom: "2%",
+  },
+  content: {
+    flex: 1,
+    backgroundColor: "white",
+    margin: "3%",
+  },
+};
